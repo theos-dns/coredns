@@ -1,22 +1,17 @@
-ARG DEBIAN_IMAGE=debian:stable-slim
-ARG BASE=gcr.io/distroless/static-debian11:nonroot
-FROM --platform=$BUILDPLATFORM ${DEBIAN_IMAGE} AS build
-SHELL [ "/bin/sh", "-ec" ]
+FROM golang:1.22-alpine AS builder
 
-RUN export DEBCONF_NONINTERACTIVE_SEEN=true \
-           DEBIAN_FRONTEND=noninteractive \
-           DEBIAN_PRIORITY=critical \
-           TERM=linux ; \
-    apt-get -qq update ; \
-    apt-get -yyqq upgrade ; \
-    apt-get -yyqq install ca-certificates libcap2-bin; \
-    apt-get clean
-COPY coredns /coredns
-RUN setcap cap_net_bind_service=+ep /coredns
+WORKDIR /root/go/
+COPY . .
+RUN apk --no-cache add make git gcc libtool musl-dev ca-certificates dumb-init curl
+RUN make
 
-FROM --platform=$TARGETPLATFORM ${BASE}
-COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
-COPY --from=build /coredns /coredns
-USER nonroot:nonroot
-EXPOSE 53 53/udp
-ENTRYPOINT ["/coredns"]
+
+FROM alpine:3.17
+LABEL org.opencontainers.image.source="https://github.com/theos-dns/coredns"
+
+WORKDIR /root/app
+
+COPY --from=builder --chmod=777 /root/go/coredns ./coredns
+
+ENTRYPOINT ["/root/app/coredns"]
+
