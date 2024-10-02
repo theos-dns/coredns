@@ -5,7 +5,7 @@ on:
     types: [ created ]
 
 jobs:
-  coap-image:
+  push-image:
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout GitHub Action'
