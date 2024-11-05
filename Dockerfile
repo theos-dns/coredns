@@ -9,6 +9,8 @@ RUN make
 FROM alpine:3.17
 LABEL org.opencontainers.image.source="https://github.com/theos-dns/coredns"
 
+RUN apk add --no-cache ca-certificates && update-ca-certificates
+
 WORKDIR /root/app
 
 COPY --from=builder --chmod=777 /root/go/coredns ./coredns
