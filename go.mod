@@ -4,10 +4,13 @@ module github.com/coredns/coredns
 // Go versions. This follows the upstream Go project support.
 go 1.24.0
 
+toolchain go1.25.0
+
 require (
 	github.com/Azure/azure-sdk-for-go v68.0.0+incompatible
 	github.com/Azure/go-autorest/autorest v0.11.30
 	github.com/Azure/go-autorest/autorest/azure/auth v0.5.13
+	github.com/MrMohebi/coredns_iran_resolver v1.2.7
 	github.com/DataDog/dd-trace-go/v2 v2.3.1
 	github.com/apparentlymart/go-cidr v1.1.0
 	github.com/aws/aws-sdk-go-v2 v1.39.5
@@ -48,6 +51,8 @@ require (
 	k8s.io/klog/v2 v2.130.1
 	sigs.k8s.io/mcs-api v0.3.0
 )
+
+require github.com/stretchr/testify v1.11.1
 
 require (
 	cloud.google.com/go/auth v0.17.0 // indirect
@@ -148,7 +153,6 @@ require (
 	github.com/secure-systems-lab/go-securesystemslib v0.9.0 // indirect
 	github.com/shirou/gopsutil/v4 v4.25.3 // indirect
 	github.com/spf13/pflag v1.0.6 // indirect
-	github.com/stretchr/testify v1.11.1 // indirect
 	github.com/theckman/httpforwarded v0.4.0 // indirect
 	github.com/tinylib/msgp v1.2.5 // indirect
 	github.com/tklauser/go-sysconf v0.3.15 // indirect

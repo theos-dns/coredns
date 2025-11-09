@@ -57,6 +57,7 @@ var Directives = []string{
 	"secondary",
 	"etcd",
 	"loop",
+	"iran_resolver",
 	"forward",
 	"grpc",
 	"erratic",
