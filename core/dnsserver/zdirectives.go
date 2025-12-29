@@ -60,6 +60,8 @@ var Directives = []string{
 	"secondary",
 	"etcd",
 	"loop",
+	"blacklist_resolver",
+	"blacklist_watcher",
 	"forward",
 	"grpc",
 	"erratic",
