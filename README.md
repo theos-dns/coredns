@@ -1,33 +1,64 @@
 ```corefile
-. {
-    blacklist_watcher {
-        # DNS servers to query for detection
-        dns-to-check 78.157.42.101:53 10.202.10.202:53
 
-        # Optional: DNS query timeout in seconds (default: 5)
-        dns-timeout 10
+.:53 {
 
-        # Detection patterns
-        sanction-search develop.403 electro
-        ban-search 10.10.34.35
-
-        # PostgreSQL connection
+    blacklist_resolver {
         pg-host 127.0.0.1
-        pg-port 5432
+        pg-port 5433
         pg-user postgres
-        pg-password yourpassword
+        pg-password postgres
         pg-db blacklist_db
         pg-schema public
 
-        # Optional: Custom tags
+        pg-table-domains domains
+        pg-table-servers servers_pro
+
+        pg-ssl false
+        pg-ssl-mode require
+        pg-ssl-root-cert /path/to/cert.pem
+
+        redis-host 127.0.0.1
+
+        ttl 10m
+
+        ban-listen-tags type=BAN plan=!plus category=!porn||!messenger
+        sanction-listen-tags type=SANCTION plan=!plus
+        whitelist-listen-tags type=WHITELIST
+
+        log-level debug
+    }
+
+
+
+
+    blacklist_watcher {
+        dns-to-check 78.157.42.101:53 8.8.8.8:53
+
+        dns-timeout 2
+
+        sanction-search develop.403 electro
+        ban-search 10.10.34.35
+
+        pg-host 127.0.0.1
+        pg-port 5433
+        pg-user postgres
+        pg-password postgres
+        pg-db blacklist_db
+        pg-schema public
+
         additional-tags server=dns1 location=us-west
 
-        # Optional: Buffer configuration
-        sanction-buffer-size 10
-        ban-buffer-size 10
+        sanction-buffer-size 2
+        ban-buffer-size 2
 
-        # Optional: Logging
-        log-level info
+        log-level debug
     }
+
+    forward . 8.8.8.8 {
+        expire 0
+    }
+
+    log
+    errors
 }
 ```
