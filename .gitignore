@@ -8,3 +8,5 @@ vendor/
 
 coredns.config
 .idea/
+
+go.mod.local
