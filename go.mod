@@ -51,8 +51,8 @@ require (
 )
 
 require (
-	github.com/MrMohebi/coredns_blacklist_resolver v1.0.3
-	github.com/MrMohebi/coredns_blacklist_watcher v1.0.3
+	github.com/MrMohebi/coredns_blacklist_resolver v1.0.4
+	github.com/MrMohebi/coredns_blacklist_watcher v1.0.4
 	golang.org/x/net v0.48.0
 )
 
